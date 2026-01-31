@@ -1,0 +1,32 @@
+<svg width="300" height="80" viewBox="0 0 300 80" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <!-- Icon Group -->
+    <g transform="translate(10, 10)">
+        <!-- Monitor Base -->
+        <path d="M20 50 L40 50 L35 42 H25 L20 50Z" fill="#0ea5e9"/>
+        <rect x="15" y="50" width="30" height="3" rx="1.5" fill="#ffffff"/>
+        
+        <!-- Monitor Frame -->
+        <rect x="0" y="0" width="60" height="42" rx="4" fill="#ffffff" stroke="#0ea5e9" stroke-width="2"/>
+        <rect x="4" y="4" width="52" height="34" rx="1" fill="#1e3a8a"/>
+        
+        <!-- Code Symbols: < / > -->
+        <!-- Left Bracket (<) -->
+        <path d="M20 14 L12 21 L20 28" stroke="#0ea5e9" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+        
+        <!-- Slash (/) -->
+        <path d="M27 30 L35 12" stroke="#ffffff" stroke-width="3" stroke-linecap="round"/>
+        
+        <!-- Right Bracket (>) -->
+        <path d="M40 14 L48 21 L40 28" stroke="#0ea5e9" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+        
+        <!-- Pencil Overlay -->
+        <g transform="translate(45, -5)">
+            <path d="M0 0 L10 -10 L16 -4 L6 6 Z" fill="#f59e0b"/>
+            <path d="M6 6 L0 0 L-2 8 L6 6" fill="#ffffff"/>
+        </g>
+    </g>
+    
+    <!-- Text -->
+    <text x="75" y="52" font-family="Arial, sans-serif" font-weight="900" font-size="46" fill="#ffffff">Web</text>
+    <text x="175" y="52" font-family="Arial, sans-serif" font-weight="900" font-size="46" fill="#0ea5e9">Craft</text>
+</svg>

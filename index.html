@@ -1,0 +1,817 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WebCraft Studio - Business Plan & Dashboard Complete</title>
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=DM+Sans:wght@400;500;700&display=swap"
+        rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+    <!-- Page Loader -->
+    <div class="page-loader">
+        <div class="loader-content">
+            <i class='bx bx-loader-alt'></i>
+            <p>Memuat Dashboard...</p>
+        </div>
+    </div>
+
+    <!-- Login Modal -->
+    <div class="login-overlay" id="loginModal">
+        <div class="login-modal">
+            <button class="close-btn" onclick="closeLogin()"><i class='bx bx-x'></i></button>
+            <h2>Selamat Datang</h2>
+            <p>Silakan login untuk melanjutkan akses</p>
+
+            <form onsubmit="handleLogin(event)">
+                <div class="form-group">
+                    <label for="username"><i class='bx bx-user'></i> Username</label>
+                    <input type="text" id="username" required placeholder="Masukkan username Anda">
+                </div>
+
+                <div class="form-group">
+                    <label for="password"><i class='bx bx-lock-alt'></i> Password</label>
+                    <input type="password" id="password" required placeholder="Masukkan password Anda">
+                </div>
+
+                <div class="form-group">
+                    <label for="role"><i class='bx bx-shield'></i> Login Sebagai</label>
+                    <select id="role" required>
+                        <option value="user">User / Pengunjung</option>
+                        <option value="admin">Admin</option>
+                    </select>
+                </div>
+
+                <button type="submit" class="login-btn">
+                    <i class='bx bx-log-in'></i> Login Sekarang
+                </button>
+            </form>
+
+            <div class="demo-credentials">
+                <strong><i class='bx bx-info-circle'></i> Demo Credentials</strong>
+                <p><i class='bx bx-user-circle'></i> <strong>User:</strong> user / user123</p>
+                <p><i class='bx bx-shield-alt-2'></i> <strong>Admin:</strong> admin / admin123</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- CRUD Modal -->
+    <div class="login-overlay" id="crudModal">
+        <div class="login-modal crud-modal">
+            <button class="close-btn" onclick="closeCrudModal()"><i class='bx bx-x'></i></button>
+            <h2 id="crudModalTitle">Tambah Proyek Baru</h2>
+            <p id="crudModalDesc">Lengkapi informasi proyek dengan detail</p>
+
+            <form onsubmit="handleSaveProject(event)">
+                <input type="hidden" id="projectId">
+
+                <div class="form-group">
+                    <label for="clientName"><i class='bx bx-user'></i> Nama Klien</label>
+                    <input type="text" id="clientName" required placeholder="Contoh: PT. Digital Indonesia">
+                </div>
+
+                <div class="form-group">
+                    <label for="projectName"><i class='bx bx-briefcase'></i> Nama Proyek</label>
+                    <input type="text" id="projectName" required placeholder="Contoh: E-Commerce Platform">
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="projectStatus"><i class='bx bx-flag'></i> Status</label>
+                        <select id="projectStatus" required>
+                            <option value="pending">Pending</option>
+                            <option value="progress">Dalam Progress</option>
+                            <option value="completed">Selesai</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="projectBudget"><i class='bx bx-dollar-circle'></i> Budget (Rp)</label>
+                        <input type="number" id="projectBudget" required placeholder="45000000" min="0">
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="projectProgress"><i class='bx bx-line-chart'></i> Progress (%)</label>
+                        <input type="number" id="projectProgress" required placeholder="65" min="0" max="100">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="projectDeadline"><i class='bx bx-calendar'></i> Deadline</label>
+                        <input type="date" id="projectDeadline" required>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="projectDescription"><i class='bx bx-file-blank'></i> Deskripsi (Opsional)</label>
+                    <textarea id="projectDescription" placeholder="Deskripsi singkat tentang proyek..."></textarea>
+                </div>
+
+                <button type="submit" class="login-btn">
+                    <i class='bx bx-save'></i> <span id="saveButtonText">Simpan Proyek</span>
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Header -->
+    <header>
+        <nav>
+            <div class="logo">
+                <img src="assets/images/logo.svg" alt="WebCraft Logo">
+            </div>
+
+            <button class="menu-toggle" onclick="toggleMenu()">
+                <i class='bx bx-menu'></i>
+            </button>
+
+            <ul class="nav-links" id="navLinks">
+                <li><a href="#home" onclick="closeMenu()">Beranda</a></li>
+                <li class="admin-menu" style="display: none;"><a href="#dashboard" onclick="closeMenu()">Dashboard</a>
+                </li>
+                <li><a href="#executive-summary" onclick="closeMenu()">Ringkasan Eksekutif</a></li>
+                <li><a href="#profile" onclick="closeMenu()">Profil Bisnis</a></li>
+                <li><a href="#market-analysis" onclick="closeMenu()">Analisis Pasar</a></li>
+                <li><a href="#marketing-strategy" onclick="closeMenu()">Strategi Pemasaran</a></li>
+                <li><a href="#management-plan" onclick="closeMenu()">Rencana Manajemen</a></li>
+                <li><a href="#contact" onclick="closeMenu()">Kontak</a></li>
+
+                <li class="auth-section">
+                    <button class="auth-btn" id="authBtn" onclick="openLogin()">
+                        <i class='bx bx-log-in'></i> Login
+                    </button>
+                </li>
+            </ul>
+        </nav>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero" id="home">
+        <div class="hero-content">
+            <div class="hero-icon">
+                <img src="assets/images/logo.svg" alt="WebCraft Logo Hero" style="height: 250px;">
+            </div>
+            <h1>WebCraft Studio</h1>
+            <p class="tagline">Transformasi Digital Dimulai dengan Website yang Powerful dan Profesional</p>
+            <p class="owner">Dipersembahkan oleh <strong>Kai WebCraft</strong></p>
+
+            <div class="cta-buttons">
+                <a href="#executive-summary" class="cta-btn cta-primary">
+                    <i class='bx bx-book-open'></i>
+                    Lihat Business Plan
+                </a>
+                <a href="#contact" class="cta-btn cta-secondary">
+                    <i class='bx bx-envelope'></i>
+                    Hubungi Kami
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Admin Dashboard (Only for Admin) -->
+    <div class="admin-dashboard admin-only" id="dashboard">
+        <div class="dashboard-header">
+            <h1><i class='bx bx-line-chart'></i> Admin Dashboard</h1>
+            <p>Monitor performa bisnis secara real-time dengan data dan analitik komprehensif</p>
+        </div>
+
+        <!-- Stats Cards -->
+        <div class="stats-grid">
+            <div class="stat-card">
+                <div class="stat-header">
+                    <div>
+                        <div class="stat-value" id="totalProjects">0</div>
+                        <div class="stat-label">Total Proyek</div>
+                    </div>
+                    <div class="stat-icon"><i class='bx bx-briefcase'></i></div>
+                </div>
+                <div class="stat-change positive">
+                    <i class='bx bx-trending-up'></i><span>+12% dari bulan lalu</span>
+                </div>
+            </div>
+
+            <div class="stat-card">
+                <div class="stat-header">
+                    <div>
+                        <div class="stat-value" id="totalClients">0</div>
+                        <div class="stat-label">Total Klien</div>
+                    </div>
+                    <div class="stat-icon"><i class='bx bx-group'></i></div>
+                </div>
+                <div class="stat-change positive">
+                    <i class='bx bx-trending-up'></i><span>+8% dari bulan lalu</span>
+                </div>
+            </div>
+
+            <div class="stat-card">
+                <div class="stat-header">
+                    <div>
+                        <div class="stat-value" id="totalRevenue">Rp 0</div>
+                        <div class="stat-label">Total Revenue</div>
+                    </div>
+                    <div class="stat-icon"><i class='bx bx-dollar-circle'></i></div>
+                </div>
+                <div class="stat-change positive">
+                    <i class='bx bx-trending-up'></i><span>+25% dari bulan lalu</span>
+                </div>
+            </div>
+
+            <div class="stat-card">
+                <div class="stat-header">
+                    <div>
+                        <div class="stat-value" id="activeProjects">0</div>
+                        <div class="stat-label">Proyek Aktif</div>
+                    </div>
+                    <div class="stat-icon"><i class='bx bx-task'></i></div>
+                </div>
+                <div class="stat-change" id="activeProjectsChange">
+                    <i class='bx bx-trending-down'></i><span>-</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Charts -->
+        <div class="charts-grid">
+            <div class="chart-card">
+                <h3><i class='bx bx-bar-chart-alt-2'></i> Revenue Bulanan</h3>
+                <canvas id="revenueChart"></canvas>
+            </div>
+            <div class="chart-card">
+                <h3><i class='bx bx-pie-chart-alt-2'></i> Distribusi Proyek</h3>
+                <canvas id="projectDistribution"></canvas>
+            </div>
+        </div>
+
+        <div class="charts-grid">
+            <div class="chart-card">
+                <h3><i class='bx bx-line-chart'></i> Trend Klien Baru</h3>
+                <canvas id="clientTrendChart"></canvas>
+            </div>
+            <div class="chart-card">
+                <h3><i class='bx bx-doughnut-chart'></i> Status Proyek</h3>
+                <canvas id="projectStatusChart"></canvas>
+            </div>
+        </div>
+
+        <!-- Real-time Activity -->
+        <div class="realtime-section">
+            <div class="realtime-header">
+                <h3><i class='bx bx-broadcast'></i> Aktivitas Real-Time</h3>
+                <div class="live-indicator">
+                    <div class="live-dot"></div>
+                    <span>Live Updates</span>
+                </div>
+            </div>
+            <div class="activity-list" id="activityList"></div>
+        </div>
+
+        <!-- Data Table with CRUD -->
+        <div class="data-table-section">
+            <div class="table-header">
+                <h3><i class='bx bx-table'></i> Manajemen Proyek</h3>
+                <div class="table-actions">
+                    <div class="search-box">
+                        <i class='bx bx-search'></i>
+                        <input type="text" id="searchInput" placeholder="Cari proyek..." onkeyup="searchProjects()">
+                    </div>
+                    <button class="btn btn-success" onclick="openAddModal()">
+                        <i class='bx bx-plus-circle'></i> Tambah Proyek
+                    </button>
+                    <button class="btn btn-primary" onclick="refreshData()">
+                        <i class='bx bx-refresh'></i> Refresh
+                    </button>
+                    <button class="btn btn-warning" onclick="exportData()">
+                        <i class='bx bx-download'></i> Export CSV
+                    </button>
+                </div>
+            </div>
+            <div style="overflow-x: auto;">
+                <table class="data-table">
+                    <thead>
+                        <tr>
+                            <th>No</th>
+                            <th>Klien</th>
+                            <th>Proyek</th>
+                            <th>Status</th>
+                            <th>Budget</th>
+                            <th>Progress</th>
+                            <th>Deadline</th>
+                            <th>Aksi</th>
+                        </tr>
+                    </thead>
+                    <tbody id="projectTableBody"></tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <!-- Executive Summary Section -->
+    <section id="executive-summary" style="background: var(--white); padding-top: 8rem;">
+        <div class="section-header">
+            <i class='bx bx-book-open section-icon'></i>
+            <h2>Ringkasan Eksekutif</h2>
+            <p>Overview strategis tentang visi, misi, dan rencana bisnis WebCraft Studio</p>
+        </div>
+
+        <div class="content-section">
+            <h2><i class='bx bx-bullseye'></i> Visi & Misi Perusahaan</h2>
+
+            <div class="highlight-box">
+                <h4>Visi</h4>
+                <p>Menjadi perusahaan web development terkemuka di Indonesia yang menghadirkan solusi digital inovatif
+                    dan berkualitas tinggi untuk transformasi bisnis di era digital.</p>
+            </div>
+
+            <div class="highlight-box">
+                <h4>Misi</h4>
+                <ul>
+                    <li>Memberikan layanan web development profesional dengan standar internasional</li>
+                    <li>Membantu bisnis mencapai potensi maksimal melalui teknologi digital</li>
+                    <li>Menghadirkan inovasi berkelanjutan dalam setiap proyek</li>
+                    <li>Membangun kepercayaan jangka panjang dengan klien melalui hasil berkualitas</li>
+                    <li>Mengembangkan tim profesional yang kompeten dan berdedikasi</li>
+                </ul>
+            </div>
+
+            <h3>Proposisi Nilai Unik</h3>
+            <p>WebCraft Studio membedakan diri melalui pendekatan holistik dalam pengembangan web, menggabungkan desain
+                modern, teknologi terkini, dan strategi bisnis yang solid. Kami tidak hanya membangun website, tetapi
+                menciptakan platform digital yang mendorong pertumbuhan bisnis klien.</p>
+
+            <div class="feature-grid">
+                <div class="feature-item">
+                    <i class='bx bx-award'></i>
+                    <h4>Kualitas Premium</h4>
+                    <p>Standar pengembangan tertinggi dengan attention to detail maksimal</p>
+                </div>
+                <div class="feature-item">
+                    <i class='bx bx-rocket'></i>
+                    <h4>Teknologi Terkini</h4>
+                    <p>Menggunakan framework dan tools modern untuk performa optimal</p>
+                </div>
+                <div class="feature-item">
+                    <i class='bx bx-support'></i>
+                    <h4>Support 24/7</h4>
+                    <p>Tim support profesional siap membantu kapanpun Anda membutuhkan</p>
+                </div>
+                <div class="feature-item">
+                    <i class='bx bx-time-five'></i>
+                    <h4>On-Time Delivery</h4>
+                    <p>Komitmen menyelesaikan proyek sesuai timeline yang disepakati</p>
+                </div>
+            </div>
+
+            <h3>Target Pasar</h3>
+            <p>Kami fokus melayani berbagai segmen bisnis di Indonesia:</p>
+            <ul>
+                <li><strong>Startup & UMKM</strong> - Solusi website terjangkau untuk bisnis yang baru berkembang</li>
+                <li><strong>Perusahaan Medium</strong> - Platform digital komprehensif untuk ekspansi bisnis</li>
+                <li><strong>Enterprise</strong> - Solusi kustomisasi tinggi dengan integrasi sistem kompleks</li>
+                <li><strong>E-Commerce</strong> - Platform jual beli online dengan fitur lengkap</li>
+            </ul>
+        </div>
+    </section>
+
+    <!-- Business Profile Section -->
+    <section id="profile" style="background: var(--light);">
+        <div class="section-header">
+            <i class='bx bx-building-house section-icon'></i>
+            <h2>Profil Bisnis</h2>
+            <p>Informasi lengkap tentang aktivitas dan layanan WebCraft Studio</p>
+        </div>
+
+        <div class="content-section">
+            <h2><i class='bx bx-info-circle'></i> Tentang WebCraft Studio</h2>
+            <p>WebCraft Studio adalah perusahaan web development profesional yang berdiri sejak 2019. Dengan pengalaman
+                lebih dari 5 tahun, kami telah melayani ratusan klien dari berbagai industri, mulai dari startup hingga
+                perusahaan besar.</p>
+
+            <p>Tim kami terdiri dari developer berpengalaman, desainer kreatif, dan project manager profesional yang
+                berdedikasi menghadirkan solusi digital terbaik untuk setiap klien. Kami bangga dengan track record 98%
+                tingkat kepuasan klien dan komitmen untuk terus berinovasi dalam setiap proyek.</p>
+
+            <h3>Layanan Unggulan</h3>
+            <div class="feature-grid">
+                <div class="feature-item">
+                    <i class='bx bx-desktop'></i>
+                    <h4>Website Development</h4>
+                    <p>Pembuatan website profesional dengan desain modern dan performa optimal</p>
+                </div>
+                <!-- <div class="feature-item">
+                    <i class='bx bx-cart'></i>
+                    <h4>E-Commerce Solutions</h4>
+                    <p>Platform jual beli online lengkap dengan payment gateway terintegrasi</p>
+                </div> -->
+                <div class="feature-item">
+                    <i class='bx bx-mobile'></i>
+                    <h4>Mobile Applications</h4>
+                    <p>Pengembangan aplikasi mobile untuk iOS dan Android</p>
+                </div>
+                <div class="feature-item">
+                    <i class='bx bx-palette'></i>
+                    <h4>UI/UX Design</h4>
+                    <p>Desain antarmuka yang menarik dan user experience yang optimal</p>
+                </div>
+                <div class="feature-item">
+                    <i class='bx bx-cloud'></i>
+                    <h4>Cloud Hosting</h4>
+                    <p>Layanan hosting handal dengan uptime 99.9%</p>
+                </div>
+                <div class="feature-item">
+                    <i class='bx bx-wrench'></i>
+                    <h4>Maintenance & Support</h4>
+                    <p>Pemeliharaan berkala dan dukungan teknis berkelanjutan</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="stats-grid" style="margin-top: 3rem;">
+            <div class="stat-card">
+                <div class="stat-header">
+                    <div>
+                        <div class="stat-value">2+</div>
+                        <div class="stat-label">Tahun Pengalaman</div>
+                    </div>
+                    <div class="stat-icon"><i class='bx bx-time-five'></i></div>
+                </div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-header">
+                    <div>
+                        <div class="stat-value">4+</div>
+                        <div class="stat-label">Proyek Selesai</div>
+                    </div>
+                    <div class="stat-icon"><i class='bx bx-check-circle'></i></div>
+                </div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-header">
+                    <div>
+                        <div class="stat-value">98%</div>
+                        <div class="stat-label">Kepuasan Klien</div>
+                    </div>
+                    <div class="stat-icon"><i class='bx bx-happy-heart-eyes'></i></div>
+                </div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-header">
+                    <div>
+                        <div class="stat-value">24/7</div>
+                        <div class="stat-label">Customer Support</div>
+                    </div>
+                    <div class="stat-icon"><i class='bx bx-support'></i></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Market Analysis Section -->
+    <section id="market-analysis" style="background: var(--white);">
+        <div class="section-header">
+            <i class='bx bx-trending-up section-icon'></i>
+            <h2>Analisis Pasar</h2>
+            <p>Insights mendalam tentang kondisi pasar dan peluang bisnis digital</p>
+        </div>
+
+        <div class="content-section">
+            <h2><i class='bx bx-bar-chart-alt-2'></i> Kondisi Pasar Digital Indonesia</h2>
+            <p>Industri digital Indonesia mengalami pertumbuhan pesat dengan nilai ekonomi digital yang diproyeksikan
+                mencapai $130 miliar pada tahun 2025. Penetrasi internet yang terus meningkat dan transformasi digital
+                yang dipercepat oleh pandemi menciptakan peluang besar bagi bisnis web development.</p>
+
+            <h3>Tren Pasar Utama</h3>
+            <div class="highlight-box">
+                <h4>Pertumbuhan E-Commerce</h4>
+                <p>Transaksi e-commerce Indonesia tumbuh 50% year-over-year, mendorong kebutuhan platform jual beli
+                    online yang robust dan user-friendly.</p>
+            </div>
+
+            <div class="highlight-box">
+                <h4>Mobile-First Approach</h4>
+                <p>Lebih dari 60% traffic internet berasal dari mobile device, membuat responsive dan mobile-optimized
+                    website menjadi keharusan.</p>
+            </div>
+
+            <div class="highlight-box">
+                <h4>Cloud Computing Adoption</h4>
+                <p>Bisnis semakin banyak beralih ke cloud untuk efisiensi dan skalabilitas, meningkatkan permintaan
+                    untuk web applications berbasis cloud.</p>
+            </div>
+
+            <h3>Kompetitor & Diferensiasi</h3>
+            <p>Pasar web development di Indonesia cukup kompetitif dengan banyak pemain, namun WebCraft Studio unggul
+                melalui:</p>
+            <ul>
+                <li><strong>Kualitas Premium</strong> dengan harga kompetitif</li>
+                <li><strong>Customer Service</strong> yang responsif dan personal</li>
+                <li><strong>Technical Expertise</strong> dengan teknologi terkini</li>
+                <li><strong>Track Record</strong> yang solid dengan klien dari berbagai industri</li>
+                <li><strong>Post-Project Support</strong> yang komprehensif</li>
+            </ul>
+
+            <h3>Target Segmen</h3>
+            <div class="feature-grid">
+                <div class="feature-item">
+                    <i class='bx bx-store'></i>
+                    <h4>Retail & E-Commerce</h4>
+                    <p>Bisnis yang ingin mengembangkan atau meningkatkan platform online mereka</p>
+                </div>
+                <div class="feature-item">
+                    <i class='bx bx-briefcase'></i>
+                    <h4>Professional Services</h4>
+                    <p>Law firms, konsultan, agensi yang butuh website profesional</p>
+                </div>
+                <div class="feature-item">
+                    <i class='bx bx-building'></i>
+                    <h4>Corporate</h4>
+                    <p>Perusahaan besar yang memerlukan aplikasi web enterprise</p>
+                </div>
+                <div class="feature-item">
+                    <i class='bx bx-coffee'></i>
+                    <h4>F&B Industry</h4>
+                    <p>Restoran dan cafe yang ingin memiliki sistem online ordering</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Marketing Strategy Section -->
+    <section id="marketing-strategy" style="background: var(--light);">
+        <div class="section-header">
+            <i class='bx bx-target-lock section-icon'></i>
+            <h2>Strategi Pemasaran</h2>
+            <p>Pendekatan komprehensif untuk menjangkau dan mengkonversi target pasar</p>
+        </div>
+
+        <div class="content-section">
+            <h2><i class='bx bx-spreadsheet'></i> Strategi Go-to-Market</h2>
+            <p>WebCraft Studio menerapkan strategi pemasaran multi-channel yang terintegrasi untuk memaksimalkan brand
+                awareness dan lead generation.</p>
+
+            <h3>Digital Marketing Channels</h3>
+            <div class="feature-grid">
+                <div class="feature-item">
+                    <i class='bx bx-search-alt'></i>
+                    <h4>SEO & Content Marketing</h4>
+                    <p>Optimasi mesin pencari dan konten berkualitas untuk organic traffic</p>
+                </div>
+                <div class="feature-item">
+                    <i class='bx bxl-google'></i>
+                    <h4>Google Ads</h4>
+                    <p>Kampanye iklan berbayar yang tertarget untuk hasil instant</p>
+                </div>
+                <div class="feature-item">
+                    <i class='bx bxl-instagram'></i>
+                    <h4>Social Media Marketing</h4>
+                    <p>Engagement aktif di Instagram, LinkedIn, dan Facebook</p>
+                </div>
+                <div class="feature-item">
+                    <i class='bx bx-envelope'></i>
+                    <h4>Email Marketing</h4>
+                    <p>Nurturing leads melalui email campaign yang personalized</p>
+                </div>
+            </div>
+
+            <h3>Sales Strategy</h3>
+            <div class="highlight-box">
+                <h4>Consultative Selling Approach</h4>
+                <p>Kami tidak hanya menjual layanan, tetapi menjadi partner strategis klien dalam transformasi digital
+                    mereka. Setiap project dimulai dengan deep-dive consultation untuk memahami kebutuhan bisnis secara
+                    menyeluruh.</p>
+            </div>
+
+            <ul>
+                <li><strong>Free Consultation</strong> - Konsultasi awal gratis untuk memahami kebutuhan klien</li>
+                <li><strong>Custom Proposal</strong> - Proposal yang disesuaikan dengan budget dan requirements</li>
+                <li><strong>Transparent Pricing</strong> - Struktur harga yang jelas tanpa hidden cost</li>
+                <li><strong>Flexible Payment</strong> - Opsi pembayaran yang fleksibel dan friendly</li>
+                <li><strong>Money-Back Guarantee</strong> - Jaminan kepuasan atau uang kembali</li>
+            </ul>
+
+            <h3>Partnership & Networking</h3>
+            <p>Membangun ekosistem bisnis melalui strategic partnerships dengan:</p>
+            <ul>
+                <li>Digital marketing agencies untuk bundled services</li>
+                <li>Business incubators dan accelerators untuk akses ke startups</li>
+                <li>Industry associations untuk credibility dan networking</li>
+                <li>Technology partners untuk enhanced capabilities</li>
+            </ul>
+
+            <h3>Retention Strategy</h3>
+            <div class="highlight-box">
+                <h4>Client Success Program</h4>
+                <p>Program khusus untuk memastikan kesuksesan jangka panjang klien, termasuk regular check-ins,
+                    performance monitoring, dan continuous optimization.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Management Plan Section -->
+    <section id="management-plan" style="background: var(--white);">
+        <div class="section-header">
+            <i class='bx bx-network-chart section-icon'></i>
+            <h2>Rencana Manajemen</h2>
+            <p>Struktur organisasi dan rencana operasional untuk pertumbuhan berkelanjutan</p>
+        </div>
+
+        <div class="content-section">
+            <h2><i class='bx bx-sitemap'></i> Struktur Organisasi</h2>
+            <p>WebCraft Studio dikelola oleh tim profesional dengan pengalaman di industri teknologi dan bisnis digital.
+            </p>
+
+            <h3>Tim Manajemen</h3>
+            <div class="feature-grid">
+                <div class="feature-item">
+                    <i class='bx bx-user-circle'></i>
+                    <h4>CEO & Founder</h4>
+                    <p>Memimpin visi strategis dan business development</p>
+                </div>
+                <div class="feature-item">
+                    <i class='bx bx-code-alt'></i>
+                    <h4>CTO</h4>
+                    <p>Mengawasi teknologi dan quality assurance</p>
+                </div>
+                <div class="feature-item">
+                    <i class='bx bx-palette'></i>
+                    <h4>Creative Director</h4>
+                    <p>Memimpin desain dan user experience</p>
+                </div>
+                <div class="feature-item">
+                    <i class='bx bx-line-chart'></i>
+                    <h4>Head of Marketing</h4>
+                    <p>Strategi pemasaran dan client acquisition</p>
+                </div>
+            </div>
+
+            <h3>Operational Excellence</h3>
+            <div class="highlight-box">
+                <h4>Project Management Framework</h4>
+                <p>Menggunakan metodologi Agile dengan sprint planning, daily standups, dan regular retrospectives untuk
+                    memastikan delivery berkualitas dan on-time.</p>
+            </div>
+
+            <ul>
+                <li><strong>Clear Communication</strong> - Regular updates dan transparent reporting kepada klien</li>
+                <li><strong>Quality Control</strong> - Multiple review stages dan testing sebelum deployment</li>
+                <li><strong>Documentation</strong> - Comprehensive documentation untuk setiap project</li>
+                <li><strong>Continuous Learning</strong> - Investment dalam training dan development tim</li>
+            </ul>
+
+            <h3>Rencana Pertumbuhan 2024-2026</h3>
+            <div class="highlight-box">
+                <h4>Tahun 2024</h4>
+                <ul>
+                    <li>Expand tim menjadi 20+ professionals</li>
+                    <li>Target 100+ new clients</li>
+                    <li>Launch enterprise solutions division</li>
+                    <li>Establish office di 2 kota besar</li>
+                </ul>
+            </div>
+
+            <div class="highlight-box">
+                <h4>Tahun 2025</h4>
+                <ul>
+                    <li>Develop proprietary tools dan frameworks</li>
+                    <li>International market expansion</li>
+                    <li>Strategic acquisitions atau partnerships</li>
+                    <li>IPO preparation</li>
+                </ul>
+            </div>
+
+            <div class="highlight-box">
+                <h4>Tahun 2026</h4>
+                <ul>
+                    <li>Menjadi top 3 web development company di Indonesia</li>
+                    <li>Revenue target: Rp 50 miliar</li>
+                    <li>Team size: 50+ professionals</li>
+                    <li>Launch tech incubator program</li>
+                </ul>
+            </div>
+
+            <h3>Risk Management</h3>
+            <p>Identifikasi dan mitigasi risiko bisnis utama:</p>
+            <ul>
+                <li><strong>Technology Risk</strong> - Continuous upskilling dan technology diversification</li>
+                <li><strong>Competition Risk</strong> - Strong differentiation dan customer loyalty program</li>
+                <li><strong>Client Concentration</strong> - Diversified client base across industries</li>
+                <li><strong>Talent Retention</strong> - Competitive compensation dan positive work culture</li>
+            </ul>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" style="background: var(--light);">
+        <div class="section-header">
+            <i class='bx bx-envelope section-icon'></i>
+            <h2>Hubungi Kami</h2>
+            <p>Siap memulai proyek website Anda? Mari diskusikan kebutuhan bisnis Anda!</p>
+        </div>
+
+        <div class="charts-grid">
+            <div class="chart-card">
+                <h3><i class='bx bx-phone'></i> Kontak Informasi</h3>
+                <div style="padding: 1rem 0;">
+                    <p style="margin-bottom: 1rem; color: var(--text-light);">
+                        <i class='bx bx-envelope'></i> <strong>Email:</strong> khaidaridar09@gmail.com
+                    </p>
+                    <p style="margin-bottom: 1rem; color: var(--text-light);">
+                        <i class='bx bxl-whatsapp'></i> <strong>WhatsApp:</strong> +62 856-9363-9312
+                    </p>
+                    <p style="margin-bottom: 1rem; color: var(--text-light);">
+                        <i class='bx bx-phone'></i> <strong>Telepon:</strong> (021) 1234-5678
+                    </p>
+                    <p style="color: var(--text-light);">
+                        <i class='bx bx-map'></i> <strong>Alamat:</strong> Jl. Teknologi No. 123, Bekasi
+                    </p>
+                </div>
+            </div>
+
+            <div class="chart-card">
+                <h3><i class='bx bx-time'></i> Jam Operasional</h3>
+                <div style="padding: 1rem 0;">
+                    <p style="margin-bottom: 1rem; color: var(--text-light);">
+                        <strong>Senin - Jumat:</strong> 09:00 - 18:00 WIB
+                    </p>
+                    <p style="margin-bottom: 1rem; color: var(--text-light);">
+                        <strong>Sabtu:</strong> 10:00 - 15:00 WIB
+                    </p>
+                    <p style="margin-bottom: 1rem; color: var(--text-light);">
+                        <strong>Minggu:</strong> Tutup
+                    </p>
+                    <p style="color: var(--success); font-weight: 600;">
+                        <i class='bx bx-broadcast'></i> Support 24/7 untuk klien enterprise
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-grid">
+                <div class="footer-section">
+                    <h3>WebCraft Studio</h3>
+                    <p>Professional web development agency yang membantu bisnis Anda tumbuh dengan solusi digital yang
+                        powerful dan scalable.</p>
+                    <div class="social-links">
+                        <a href="#" title="Facebook"><i class='bx bxl-facebook'></i></a>
+                        <a href="#" title="Instagram"><i class='bx bxl-instagram'></i></a>
+                        <a href="#" title="LinkedIn"><i class='bx bxl-linkedin'></i></a>
+                        <a href="#" title="Twitter"><i class='bx bxl-twitter'></i></a>
+                        <a href="#" title="GitHub"><i class='bx bxl-github'></i></a>
+                    </div>
+                </div>
+
+                <div class="footer-section">
+                    <h3>Layanan</h3>
+                    <ul>
+                        <li><a href="#"><i class='bx bx-right-arrow-alt'></i> Website Development</a></li>
+                        <li><a href="#"><i class='bx bx-right-arrow-alt'></i> E-Commerce Solution</a></li>
+                        <li><a href="#"><i class='bx bx-right-arrow-alt'></i> UI/UX Design</a></li>
+                        <li><a href="#"><i class='bx bx-right-arrow-alt'></i> Mobile Apps</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-section">
+                    <h3>Business Plan</h3>
+                    <ul>
+                        <li><a href="#executive-summary"><i class='bx bx-right-arrow-alt'></i> Ringkasan Eksekutif</a>
+                        </li>
+                        <li><a href="#profile"><i class='bx bx-right-arrow-alt'></i> Profil Bisnis</a></li>
+                        <li><a href="#market-analysis"><i class='bx bx-right-arrow-alt'></i> Analisis Pasar</a></li>
+                        <li><a href="#marketing-strategy"><i class='bx bx-right-arrow-alt'></i> Strategi Pemasaran</a>
+                        </li>
+                        <li><a href="#management-plan"><i class='bx bx-right-arrow-alt'></i> Rencana Manajemen</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-section">
+                    <h3>Resources</h3>
+                    <ul>
+                        <li><a href="#"><i class='bx bx-right-arrow-alt'></i> Blog & Tutorial</a></li>
+                        <li><a href="#"><i class='bx bx-right-arrow-alt'></i> Case Studies</a></li>
+                        <li><a href="#"><i class='bx bx-right-arrow-alt'></i> FAQ</a></li>
+                        <li><a href="#contact"><i class='bx bx-right-arrow-alt'></i> Kontak Kami</a></li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="footer-bottom">
+                <p>&copy; 2024 WebCraft Studio. All rights reserved. Made with <i class='bx bxs-heart'
+                        style="color: #ef4444;"></i> in Indonesia</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="js/script.js"></script>
+</body>
+
+</html>
