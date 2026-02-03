@@ -7,7 +7,8 @@
         :root {
             --primary: #1e3a8a;
             --secondary: #0ea5e9;
-            --accent: #6366f1;
+            --accent: #3b82f6;
+            /* Changed from Purple to Blue */
             --gold: #f59e0b;
             --success: #10b981;
             --danger: #ef4444;
@@ -327,7 +328,7 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            background: linear-gradient(135deg, #7c3aed 0%, #a855f7 100%);
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
             position: relative;
             overflow: hidden;
             padding-top: 70px;
@@ -1330,23 +1331,33 @@
             }
 
             .hero {
-                padding-top: 62px;
+                padding-top: 80px;
+                padding-bottom: 2rem;
+                min-height: auto;
             }
 
             .hero h1 {
-                font-size: 2.5rem;
+                font-size: 2rem;
+                margin-bottom: 0.75rem;
             }
 
             .hero .tagline {
-                font-size: 1.125rem;
+                font-size: 1rem;
+                margin-bottom: 0.5rem;
             }
 
             .hero .owner {
-                font-size: 0.9375rem;
+                font-size: 0.875rem;
+                margin-bottom: 1.5rem;
             }
 
             .hero-icon {
-                font-size: 3.5rem;
+                font-size: 3rem;
+                margin-bottom: 1rem;
+            }
+
+            .hero-icon img {
+                height: 120px !important;
             }
 
             .cta-buttons {
@@ -1358,33 +1369,64 @@
             .cta-btn {
                 width: 100%;
                 justify-content: center;
-                padding: 0.875rem 2rem;
-                font-size: 0.9375rem;
+                padding: 0.75rem 1.5rem;
+                font-size: 0.9rem;
+            }
+
+            section {
+                padding: 3rem 1.25rem;
+            }
+
+            .section-header {
+                margin-bottom: 2.5rem;
             }
 
             .section-header h2 {
-                font-size: 2.25rem;
+                font-size: 1.75rem;
+            }
+
+            .section-header p {
+                font-size: 1rem;
             }
 
             .login-modal,
             .crud-modal {
-                padding: 2rem;
+                padding: 1.5rem;
+                width: 95%;
+                margin: 0 auto;
+            }
+
+            .login-modal h2 {
+                font-size: 1.75rem;
             }
 
             .footer-grid {
                 grid-template-columns: 1fr;
+                gap: 2rem;
+            }
+
+            footer {
+                padding: 3rem 1.5rem 1.5rem;
+                margin-top: 2rem;
             }
 
             .charts-grid {
                 grid-template-columns: 1fr;
+                gap: 1.5rem;
             }
 
             .stats-grid {
                 grid-template-columns: 1fr;
+                gap: 1rem;
+            }
+
+            .dashboard-header {
+                padding: 1.5rem;
+                border-radius: 16px;
             }
 
             .dashboard-header h1 {
-                font-size: 2rem;
+                font-size: 1.75rem;
             }
 
             .form-row {
@@ -1393,14 +1435,17 @@
 
             .table-actions {
                 width: 100%;
+                flex-direction: column;
             }
 
-            .table-actions .btn {
-                flex: 1;
+            .table-actions .btn,
+            .table-actions .search-box {
+                width: 100%;
+                max-width: none;
             }
 
             .data-table {
-                font-size: 0.85rem;
+                font-size: 0.8rem;
             }
 
             .data-table th,
@@ -1409,14 +1454,25 @@
             }
 
             .content-section {
-                padding: 2rem 1.5rem;
+                padding: 1.5rem;
+                border-radius: 16px;
             }
 
             .content-section h2 {
-                font-size: 1.75rem;
+                font-size: 1.5rem;
+            }
+
+            .content-section h3 {
+                font-size: 1.25rem;
+                margin-top: 1.5rem;
             }
 
             .feature-grid {
                 grid-template-columns: 1fr;
+                gap: 1rem;
+            }
+
+            .feature-item {
+                padding: 1.25rem;
             }
         }
