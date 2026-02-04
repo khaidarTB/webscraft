@@ -138,6 +138,7 @@
                 </li>
                 <li><a href="#executive-summary" onclick="closeMenu()">Ringkasan Eksekutif</a></li>
                 <li><a href="#profile" onclick="closeMenu()">Profil Bisnis</a></li>
+                <li><a href="#products" onclick="closeMenu()">Produk</a></li>
                 <li><a href="#market-analysis" onclick="closeMenu()">Analisis Pasar</a></li>
                 <li><a href="#marketing-strategy" onclick="closeMenu()">Strategi Pemasaran</a></li>
                 <li><a href="#management-plan" onclick="closeMenu()">Rencana Manajemen</a></li>
@@ -472,8 +473,102 @@
         </div>
     </section>
 
+    <!-- Products Section -->
+    <section id="products" style="background: var(--white);">
+        <div class="section-header">
+            <i class='bx bx-shopping-bag section-icon'></i>
+            <h2>Produk & Layanan</h2>
+            <p>Pilih paket solusi digital yang sesuai dengan kebutuhan bisnis Anda</p>
+        </div>
+
+        <div class="content-section">
+            <div class="feature-grid" style="grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 2rem;">
+                <!-- Starter Package -->
+                <div class="pricing-card">
+                    <div class="pricing-header">
+                        <div class="pricing-icon">
+                            <i class='bx bx-rocket'></i>
+                        </div>
+                        <h3>Starter Pack</h3>
+                        <p>Cocok untuk personal branding & UMKM</p>
+                    </div>
+                    <div class="price-tag">
+                        <span class="currency">Rp</span>
+                        <span class="amount">1.5jt</span>
+                    </div>
+                    <ul class="pricing-features">
+                        <li><i class='bx bx-check-circle'></i> Landing Page Responsive</li>
+                        <li><i class='bx bx-check-circle'></i> Domain .com Gratis (1 Tahun)</li>
+                        <li><i class='bx bx-check-circle'></i> SSL Security</li>
+                        <li><i class='bx bx-check-circle'></i> 3 Halaman Utama</li>
+                        <li><i class='bx bx-check-circle'></i> Revisi 2x</li>
+                    </ul>
+                    <a href="https://wa.me/628561637713?text=Halo%20WebCraft%2C%20saya%20tertarik%20dengan%20paket%20Starter%20Pack%20(Rp%201.5jt)"
+                        target="_blank" class="cta-btn cta-secondary"
+                        style="background: var(--primary); color: white; width: 100%; justify-content: center;">Pilih
+                        Paket</a>
+                </div>
+
+                <!-- Business Package -->
+                <div class="pricing-card featured">
+                    <div class="popular-badge">POPULAR</div>
+                    <div class="pricing-header">
+                        <div class="pricing-icon">
+                            <i class='bx bx-store'></i>
+                        </div>
+                        <h3>Business Pro</h3>
+                        <p>Solusi lengkap untuk bisnis berkembang</p>
+                    </div>
+                    <div class="price-tag">
+                        <span class="currency">Rp</span>
+                        <span class="amount">3.5jt</span>
+                    </div>
+                    <ul class="pricing-features">
+                        <li><i class='bx bx-check-circle'></i> Website Company Profile</li>
+                        <li><i class='bx bx-check-circle'></i> CMS (Admin Panel)</li>
+                        <li><i class='bx bx-check-circle'></i> SEO Basic Setup</li>
+                        <li><i class='bx bx-check-circle'></i> 5 Halaman + Blog</li>
+                        <li><i class='bx bx-check-circle'></i> Integrasi WhatsApp/Email</li>
+                        <li><i class='bx bx-check-circle'></i> Support 3 Bulan</li>
+                    </ul>
+                    <a href="https://wa.me/6281265392181?text=Halo%20WebCraft%2C%20saya%20tertarik%20dengan%20paket%20Business%20Pro%20(Rp%203.5jt)"
+                        target="_blank" class="cta-btn cta-primary"
+                        style="background: var(--accent); color: white; width: 100%; justify-content: center;">Pilih
+                        Paket</a>
+                </div>
+
+                <!-- Enterprise Package -->
+                <div class="pricing-card">
+                    <div class="pricing-header">
+                        <div class="pricing-icon">
+                            <i class='bx bx-buildings'></i>
+                        </div>
+                        <h3>Enterprise</h3>
+                        <p>Sistem kompleks untuk perusahaan besar</p>
+                    </div>
+                    <div class="price-tag">
+                        <span class="currency">Rp</span>
+                        <span class="amount">8jt+</span>
+                    </div>
+                    <ul class="pricing-features">
+                        <li><i class='bx bx-check-circle'></i> Custom Web Application</li>
+                        <li><i class='bx bx-check-circle'></i> Database Integration</li>
+                        <li><i class='bx bx-check-circle'></i> API Development</li>
+                        <li><i class='bx bx-check-circle'></i> Payment Gateway</li>
+                        <li><i class='bx bx-check-circle'></i> Halaman Unlimited</li>
+                        <li><i class='bx bx-check-circle'></i> Prioritas Support 24/7</li>
+                    </ul>
+                    <a href="https://wa.me/6281265392181?text=Halo%20WebCraft%2C%20saya%20tertarik%20dengan%20paket%20Enterprise"
+                        target="_blank" class="cta-btn cta-secondary"
+                        style="background: var(--primary); color: white; width: 100%; justify-content: center;">Hubungi
+                        Kami</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
     <!-- Market Analysis Section -->
-    <section id="market-analysis" style="background: var(--white);">
+    <section id="market-analysis" style="background: var(--light);">
         <div class="section-header">
             <i class='bx bx-trending-up section-icon'></i>
             <h2>Analisis Pasar</h2>
@@ -543,7 +638,7 @@
     </section>
 
     <!-- Marketing Strategy Section -->
-    <section id="marketing-strategy" style="background: var(--light);">
+    <section id="marketing-strategy" style="background: var(--white);">
         <div class="section-header">
             <i class='bx bx-target-lock section-icon'></i>
             <h2>Strategi Pemasaran</h2>
@@ -614,7 +709,7 @@
     </section>
 
     <!-- Management Plan Section -->
-    <section id="management-plan" style="background: var(--white);">
+    <section id="management-plan" style="background: var(--light);">
         <div class="section-header">
             <i class='bx bx-network-chart section-icon'></i>
             <h2>Rencana Manajemen</h2>
@@ -707,7 +802,7 @@
     </section>
 
     <!-- Contact Section -->
-    <section id="contact" style="background: var(--light);">
+    <section id="contact" style="background: var(--white);">
         <div class="section-header">
             <i class='bx bx-envelope section-icon'></i>
             <h2>Hubungi Kami</h2>
